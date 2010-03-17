@@ -531,12 +531,9 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
                 itr->getSource()->NearTeleportTo(VortexLoc[0].x, VortexLoc[0].y, VORTEX_Z, 0); 
                 itr->getSource()->CastSpell(itr->getSource(), SPELL_VORTEX, true);
 
-              /*  //Far sight, should be vehicle but this is enought
-                if(Creature *pVortex = m_creature->SummonCreature(NPC_VORTEX, OtherLoc[1].x, OtherLoc[1].y, OtherLoc[1].z, OtherLoc[1].o, TEMPSUMMON_TIMED_DESPAWN, 11000))
-                {
-                    pVortex->SetVisibility(VISIBILITY_OFF);
+                //Far sight, should be vehicle but this is enought
+                if(Creature *pVortex = m_creature->SummonCreature(NPC_VORTEX, OtherLoc[1].x, OtherLoc[1].y, OtherLoc[1].z, OtherLoc[1].o, TEMPSUMMON_TIMED_DESPAWN, 18000))          
                     itr->getSource()->SetFarSightGUID(pVortex->GetGUID());
-                } */
             }        
         }
         else if(phase > 1 && phase < 26){
@@ -733,9 +730,9 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
     void SendDeepBreathCast()
     {
         WorldPacket data(SMSG_SPELL_GO, 50);
-        data.append(m_creature->GetPackGUID());
+        data << m_creature->GetPackGUID();
 
-        data.append(m_creature->GetPackGUID());
+        data << m_creature->GetPackGUID();
         data << uint8(1);
         data << uint32(SPELL_DEEP_BREATH);
         data << uint32(256);
