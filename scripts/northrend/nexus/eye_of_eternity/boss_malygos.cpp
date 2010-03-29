@@ -321,11 +321,11 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
 
         m_uiEnrageTimer = 600000;
         m_uiSpeechTimer[0] = 15000;
-        m_uiSpeechTimer[1] = 18000;
-        m_uiSpeechTimer[2] = 19000;
-        m_uiSpeechTimer[3] = 21000;
-        m_uiSpeechTimer[4] = 18000;
-        m_uiSpeechTimer[5] = 17000;
+        m_uiSpeechTimer[1] = 22000;
+        m_uiSpeechTimer[2] = 24000;
+        m_uiSpeechTimer[3] = 26000;
+        m_uiSpeechTimer[4] = 23000;
+        m_uiSpeechTimer[5] = 22000;
         m_uiTimer = 7000;
         m_uiVortexTimer = 60000;
         m_uiArcaneBreathTimer = 15000;
@@ -532,11 +532,12 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
                 if(!itr->getSource()->isAlive())
                     continue;
                 itr->getSource()->NearTeleportTo(VortexLoc[0].x, VortexLoc[0].y, VORTEX_Z, 0); 
-                itr->getSource()->CastSpell(itr->getSource(), SPELL_VORTEX, true);
+                itr->getSource()->CastSpell(itr->getSource(), SPELL_VORTEX, true, NULL, NULL, m_creature->GetGUID());
 
                 //Far sight, should be vehicle but this is enought
-                if(Creature *pVortex = m_creature->SummonCreature(NPC_VORTEX, OtherLoc[1].x, OtherLoc[1].y, OtherLoc[1].z, OtherLoc[1].o, TEMPSUMMON_TIMED_DESPAWN, 18000))          
-                    itr->getSource()->SetFarSightGUID(pVortex->GetGUID());
+                // Crash the server in group update far members, dunno why
+               /* if(Creature *pVortex = m_creature->SummonCreature(NPC_VORTEX, OtherLoc[1].x, OtherLoc[1].y, OtherLoc[1].z, OtherLoc[1].o, TEMPSUMMON_TIMED_DESPAWN, 18000))          
+                    itr->getSource()->SetFarSightGUID(pVortex->GetGUID()); */
             }        
         }
         else if(phase > 1 && phase < 26){
@@ -573,7 +574,7 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
             Map::PlayerList const &lPlayers = pMap->GetPlayers();
             for(Map::PlayerList::const_iterator itr = lPlayers.begin(); itr != lPlayers.end(); ++itr)
             {
-                itr->getSource()->SetFarSightGUID(0);
+                //itr->getSource()->SetFarSightGUID(0);
                 itr->getSource()->NearTeleportTo(VortexLoc[0].x, VortexLoc[0].y, VORTEX_Z, 0);
             }
             
@@ -681,7 +682,7 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
                 if(pPlayer->GetVehicleGUID())
                     pPlayer->ExitVehicle();
 
-                if(Vehicle *pTemp = m_creature->SummonVehicle(NPC_WYRMREST_SKYTALON, pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ()-5, 0))
+                if(Vehicle *pTemp = m_creature->SummonVehicle(NPC_WYRMREST_SKYTALON, pPlayer->GetPositionX(), pPlayer->GetPositionY(), pPlayer->GetPositionZ(), 0))
                 {
                     ((Creature*)pTemp)->SetCreatorGUID(pPlayer->GetGUID());
                     uint32 health = ((Creature*)pTemp)->GetHealth() + (pPlayer->GetMaxHealth()*2); // may be wrong
@@ -778,12 +779,12 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
                     m_uiSpeechCount++;
                     if(m_uiSpeechCount == 5){
                         m_uiSpeechCount = 0;
-                        m_uiSpeechTimer[0] = 15000;
-                        m_uiSpeechTimer[1] = 18000;
-                        m_uiSpeechTimer[2] = 19000;
-                        m_uiSpeechTimer[3] = 21000;
-                        m_uiSpeechTimer[4] = 18000;
-                        m_uiSpeechTimer[5] = 17000;
+                        m_uiSpeechTimer[0] = 28000;
+                        m_uiSpeechTimer[1] = 22000;
+                        m_uiSpeechTimer[2] = 24000;
+                        m_uiSpeechTimer[3] = 26000;
+                        m_uiSpeechTimer[4] = 23000;
+                        m_uiSpeechTimer[5] = 22000;
                     }
                 }else m_uiSpeechTimer[m_uiSpeechCount] -= uiDiff;
                 //Random movement over platform
