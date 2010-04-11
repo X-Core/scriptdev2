@@ -293,6 +293,8 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
     uint8 m_uiVortexPhase;
     std::list<uint64> m_lSparkGUIDList;
     std::list<uint64> m_lDiscGUIDList;
+    bool m_bRadomMovement;
+    uint32 m_uiMovementTimer;
 
     uint32 m_uiEnrageTimer;
     uint32 m_uiSpeechTimer[5];
@@ -300,6 +302,7 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
     uint32 m_uiVortexTimer;
     uint32 m_uiArcaneBreathTimer;
     uint32 m_uiPowerSparkTimer;
+    uint32 m_uiFlyIntoCenterTimer;
     uint32 m_uiDeepBreathTimer;
     uint32 m_uiShellTimer;
     uint32 m_uiArcaneStormTimer;
@@ -318,6 +321,7 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
         m_uiSpeechCount = 0;
         m_uiVortexPhase = 0;
         m_lSparkGUIDList.clear();
+        m_bRadomMovement = true;
 
         m_uiEnrageTimer = 600000;
         m_uiSpeechTimer[0] = 15000;
@@ -330,12 +334,14 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
         m_uiVortexTimer = 60000;
         m_uiArcaneBreathTimer = 15000;
         m_uiPowerSparkTimer = 30000;
+        m_uiFlyIntoCenterTimer = 60000;
         m_uiDeepBreathTimer = 70000;
         m_uiShellTimer = 0;
         m_uiArcaneStormTimer = 15000;
         m_uiStaticFieldTimer = 15000;
         m_uiArcanePulseTimer = 1000;
         m_uiSurgeOfPowerTimer = 30000;
+        m_uiMovementTimer = 5000;
         
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
         m_creature->SetUInt32Value(UNIT_FIELD_BYTES_0, 50331648);
@@ -473,8 +479,9 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
     }
     void SummonedCreatureDespawn(Creature* pDespawned)
     {
-        if((pDespawned->GetEntry() != NPC_SCION_OF_ETERNITY && pDespawned->GetEntry() != NPC_NEXUS_LORD &&
-           pDespawned->GetEntry() != NPC_SCION_OF_ETERNITY_H && pDespawned->GetEntry() != NPC_NEXUS_LORD_H) || m_uiPhase == PHASE_NOSTART)
+        if((pDespawned->GetDisplayId() != 24316 && pDespawned->GetDisplayId() != 24317 && 
+            pDespawned->GetDisplayId() != 24318 && pDespawned->GetDisplayId() != 24319)
+            || m_uiPhase == PHASE_NOSTART)
             return;
 
         float x,y,z;
@@ -536,8 +543,9 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
 
                 //Far sight, should be vehicle but this is enought
                 // Crash the server in group update far members, dunno why
-               /* if(Creature *pVortex = m_creature->SummonCreature(NPC_VORTEX, OtherLoc[1].x, OtherLoc[1].y, OtherLoc[1].z, OtherLoc[1].o, TEMPSUMMON_TIMED_DESPAWN, 18000))          
-                    itr->getSource()->SetFarSightGUID(pVortex->GetGUID()); */
+                // I will try to use this again, maybe I have fix...
+                if(Creature *pVortex = m_creature->SummonCreature(NPC_VORTEX, OtherLoc[1].x, OtherLoc[1].y, OtherLoc[1].z, OtherLoc[1].o, TEMPSUMMON_TIMED_DESPAWN, 18000))          
+                    itr->getSource()->SetFarSightGUID(pVortex->GetGUID());
             }        
         }
         else if(phase > 1 && phase < 26){
@@ -574,7 +582,7 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
             Map::PlayerList const &lPlayers = pMap->GetPlayers();
             for(Map::PlayerList::const_iterator itr = lPlayers.begin(); itr != lPlayers.end(); ++itr)
             {
-                //itr->getSource()->SetFarSightGUID(0);
+                itr->getSource()->SetFarSightGUID(0);
                 itr->getSource()->NearTeleportTo(VortexLoc[0].x, VortexLoc[0].y, VORTEX_Z, 0);
             }
             
@@ -922,6 +930,7 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
             // Deep breath
             if(m_uiDeepBreathTimer <= uiDiff)
             {
+                m_creature->StopMoving();
                 DoScriptText(SAY_ARCANE_PULSE, m_creature);
                 DoScriptText(SAY_ARCANE_PULSE_WARN, m_creature);
                 SendDeepBreathCast();
@@ -929,6 +938,9 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
                     DoCast(pTrigger, SPELL_SURGE_OF_POWER_BREATH);
 
                 m_uiDeepBreathTimer = 60000;
+                m_uiFlyIntoCenterTimer = 50000;
+                m_bRadomMovement = true;
+                m_uiMovementTimer = 9500;
             }else m_uiDeepBreathTimer -= uiDiff;
 
             // Arcane Storm
@@ -937,6 +949,24 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
                 DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_ARCANE_STORM : SPELL_ARCANE_STORM_H);
                 m_uiArcaneStormTimer = 20000;
             }else m_uiArcaneStormTimer -= uiDiff;
+
+            //Random movement over platform
+            if(m_uiMovementTimer <= uiDiff && m_bRadomMovement)
+            {
+                uint8 tmp = urand(0,3);
+                DoMovement(SparkLoc[tmp].x, SparkLoc[tmp].y, m_creature->GetPositionZ(), 0, true);
+                m_uiMovementTimer = 25000;
+            }else if(m_uiMovementTimer > uiDiff && m_bRadomMovement)
+                m_uiMovementTimer -= uiDiff;
+
+            // Fly into center before deep breath
+            if(m_uiFlyIntoCenterTimer <= uiDiff)
+            {
+                m_creature->StopMoving();
+                DoMovement(OtherLoc[2].x, OtherLoc[2].y, m_creature->GetPositionZ(), 0, true);
+                m_bRadomMovement = false;
+                m_uiFlyIntoCenterTimer = 20000; // Deep breath will set this to right value
+            }else m_uiFlyIntoCenterTimer -= uiDiff;
 
             if(m_uiTimer <= uiDiff)
             {
@@ -1116,10 +1146,11 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
                         m_uiSubPhase = SUBPHASE_DIE;
                         //Summon exit portal, platform and loot
                         m_creature->SummonGameobject(GO_EXIT_PORTAL, GOPositions[2].x, GOPositions[2].y, GOPositions[2].z, GOPositions[2].o, 0);
-                        
-                        if(GameObject *pGift = m_creature->SummonGameobject(GO_PLATFORM, GOPositions[0].x, GOPositions[0].y, GOPositions[0].z, GOPositions[0].o, 0))
+                        m_creature->SummonGameobject(GO_PLATFORM, GOPositions[0].x, GOPositions[0].y, GOPositions[0].z, GOPositions[0].o, 0);
+                        if(GameObject *pGift = m_creature->SummonGameobject(m_bIsRegularMode ? GO_ALEXSTRASZAS_GIFT : GO_ALEXSTRASZAS_GIFT_H, GOPositions[1].x, GOPositions[1].y, GOPositions[1].z, GOPositions[1].o,96000000))
                             pAlexstrasza->SetFacingToObject(pGift);
                         m_creature->getVictim()->DealDamage(m_creature, m_creature->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+
                         break;
                 }
                 m_uiSpeechCount++;
