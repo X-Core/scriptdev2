@@ -522,6 +522,11 @@ struct MANGOS_DLL_DECL instance_naxxramas : public ScriptedInstance
                             pPlayer->GetAchievementMgr().CompletedAchievement(AchievHorsemen);
                     }
                 }
+                if(!instance->IsRegularDifficulty())
+                {
+                    Map::PlayerList::const_iterator itr = lPlayers.begin();
+                    itr->getSource()->SummonGameobject(193426, 2511.5,-2943.93, 245.555,5.487,460000);
+                }
             }
         }
     }
