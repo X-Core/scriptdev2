@@ -125,7 +125,7 @@ struct MANGOS_DLL_DECL boss_left_armAI : public ScriptedAI
         SetCombatMovement(false);
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
-        LeftArmX = 1777.636841; LeftArmY = -47.970596; LeftArmZ = 448.805908;
+        LeftArmX = 1777.636841f; LeftArmY = -47.970596f; LeftArmZ = 448.805908f;
     }
 
     bool m_bIsRegularMode;
@@ -139,6 +139,7 @@ struct MANGOS_DLL_DECL boss_left_armAI : public ScriptedAI
         Shockwave_Timer = 30000;
         Addcount = 0;
         DoCast(m_creature, SPELL_ARM_VISUAL);
+		SetCombatMovement(false);
     }
 
     void Aggro(Unit* pWho)
@@ -199,7 +200,7 @@ struct MANGOS_DLL_DECL boss_right_armAI : public ScriptedAI
         SetCombatMovement(false);
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
-        RightArmX = 1779.671753; RightArmY = 1.514701; RightArmZ = 448.810577;
+        RightArmX = 1779.671753f; RightArmY = 1.514701f; RightArmZ = 448.810577f;
     }
 
     bool m_bIsRegularMode;
@@ -222,6 +223,7 @@ struct MANGOS_DLL_DECL boss_right_armAI : public ScriptedAI
         freedmg = 0;
         grip = false;
         DoCast(m_creature, SPELL_ARM_VISUAL);
+		SetCombatMovement(false);
     }
 
     void Aggro(Unit* pWho)
@@ -328,6 +330,7 @@ struct MANGOS_DLL_DECL boss_kologarnAI : public ScriptedAI
         Check_Timer = 6300;
         right = true;
         left = true;
+		SetCombatMovement(false);
     }
 
     void JustDied(Unit* pKiller)
