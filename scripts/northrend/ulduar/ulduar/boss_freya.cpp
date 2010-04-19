@@ -353,17 +353,17 @@ struct MANGOS_DLL_DECL boss_freyaAI : public ScriptedAI
 
     void Reset()
     {
-        Wave_Timer = urand(9,12)*IN_MILISECONDS;
-        LifebinderGift_Timer = urand(19,23)*IN_MILISECONDS;
-        Sunbeam_Timer = urand(44,49)*IN_MILISECONDS;
-        Berserk_Timer = 10*MINUTE*IN_MILISECONDS;
-        ChangeFaction_Timer = 5*IN_MILISECONDS;
-        EndPhaseDespawn_Timer = 10*IN_MILISECONDS;
-        GroundTremor_Timer = urand(20,25)*IN_MILISECONDS;
-        IronRoots_Timer = urand(35,40)*IN_MILISECONDS;
-        SunBeams_Timer = urand(23,28)*IN_MILISECONDS;
-        NatureBomb_Timer = urand(15,20)*IN_MILISECONDS;
-        ThreeWaveDeath_Timer = 5*IN_MILISECONDS;
+        Wave_Timer = urand(9,12)*IN_MILLISECONDS;
+        LifebinderGift_Timer = urand(19,23)*IN_MILLISECONDS;
+        Sunbeam_Timer = urand(44,49)*IN_MILLISECONDS;
+        Berserk_Timer = 10*MINUTE*IN_MILLISECONDS;
+        ChangeFaction_Timer = 5*IN_MILLISECONDS;
+        EndPhaseDespawn_Timer = 10*IN_MILLISECONDS;
+        GroundTremor_Timer = urand(20,25)*IN_MILLISECONDS;
+        IronRoots_Timer = urand(35,40)*IN_MILLISECONDS;
+        SunBeams_Timer = urand(23,28)*IN_MILLISECONDS;
+        NatureBomb_Timer = urand(15,20)*IN_MILLISECONDS;
+        ThreeWaveDeath_Timer = 5*IN_MILLISECONDS;
         Wave_Count = 0;
 
         FactionChanged = false;
@@ -589,7 +589,7 @@ struct MANGOS_DLL_DECL boss_freyaAI : public ScriptedAI
                         pSnap->Respawn();
                 }else ThreeWaveDeath_Timer -= diff;
             
-            }else ThreeWaveDeath_Timer = 5*IN_MILISECONDS;
+            }else ThreeWaveDeath_Timer = 5*IN_MILLISECONDS;
         
         }
 
@@ -606,7 +606,7 @@ struct MANGOS_DLL_DECL boss_freyaAI : public ScriptedAI
             if(spell == SPELL_SUMMON_WAVE_3)
                 ThreeAddPhase = true;
             
-            Wave_Timer = MINUTE*IN_MILISECONDS;
+            Wave_Timer = MINUTE*IN_MILLISECONDS;
             Wave_Count++;
         }else Wave_Timer -= diff;
 
@@ -619,7 +619,7 @@ struct MANGOS_DLL_DECL boss_freyaAI : public ScriptedAI
         if(Sunbeam_Timer < diff)
         {
             DoCast(SelectUnit(SELECT_TARGET_RANDOM,0), m_bIsRegularMode ? SPELL_SUNBEAM : H_SPELL_SUNBEAM);
-            Sunbeam_Timer = urand(15,20)*IN_MILISECONDS;		
+            Sunbeam_Timer = urand(15,20)*IN_MILLISECONDS;		
         }else Sunbeam_Timer -= diff;
 
         if(StonebarkAlive)
@@ -627,7 +627,7 @@ struct MANGOS_DLL_DECL boss_freyaAI : public ScriptedAI
             if(GroundTremor_Timer < diff)
             {
                 DoCast(m_creature, m_bIsRegularMode ? SPELL_GROUND_TREMOR_FREYA : H_SPELL_GROUND_TREMOR_FREYA);
-                GroundTremor_Timer = urand(26,29)*IN_MILISECONDS;
+                GroundTremor_Timer = urand(26,29)*IN_MILLISECONDS;
             }else GroundTremor_Timer -= diff;
         }
         if(IronbranchAlive)
@@ -651,7 +651,7 @@ struct MANGOS_DLL_DECL boss_freyaAI : public ScriptedAI
                         i++;
                     }else break;
                 }
-                IronRoots_Timer = urand(50,70)*IN_MILISECONDS;
+                IronRoots_Timer = urand(50,70)*IN_MILLISECONDS;
             }else IronRoots_Timer -= diff;
         }
 
@@ -669,7 +669,7 @@ struct MANGOS_DLL_DECL boss_freyaAI : public ScriptedAI
                         m_creature->SummonCreature(NPC_SUN_BEAM, x, y, z, 0, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 20000);
                     }
                 }
-                SunBeams_Timer = urand(29,33)*IN_MILISECONDS;
+                SunBeams_Timer = urand(29,33)*IN_MILLISECONDS;
             }else SunBeams_Timer -= diff;
         }
 
@@ -691,7 +691,7 @@ struct MANGOS_DLL_DECL boss_freyaAI : public ScriptedAI
                     m_creature->SummonCreature(NPC_NATURE_BOMB, x, y, z, 0, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 20000);
                     m_creature->SummonGameobject(GO_NATURE_BOMB, x, y, z, 0, 25000);
                 }
-                NatureBomb_Timer = urand(15,18)*IN_MILISECONDS;
+                NatureBomb_Timer = urand(15,18)*IN_MILLISECONDS;
             }else NatureBomb_Timer -= diff;
         //}
 
@@ -699,7 +699,7 @@ struct MANGOS_DLL_DECL boss_freyaAI : public ScriptedAI
         {
             DoCast(m_creature, SPELL_BERSERK);
             DoScriptText(SAY_BERSERK, m_creature);
-            Berserk_Timer = 60*IN_MILISECONDS;		
+            Berserk_Timer = 60*IN_MILLISECONDS;		
         }else Berserk_Timer -= diff;
         
         DoMeleeAttackIfReady();
@@ -744,14 +744,14 @@ struct MANGOS_DLL_DECL mob_freya_groundAI : public ScriptedAI
 
     void Reset()
     {
-        NatureBomb_Timer = urand(9,11)*IN_MILISECONDS;
-        EonarsGift_Timer = urand(11,13)*IN_MILISECONDS;
-        NonSelectable_Timer = 5*IN_MILISECONDS;
-        UnstableEnergy_Timer = IN_MILISECONDS;
+        NatureBomb_Timer = urand(9,11)*IN_MILLISECONDS;
+        EonarsGift_Timer = urand(11,13)*IN_MILLISECONDS;
+        NonSelectable_Timer = 5*IN_MILLISECONDS;
+        UnstableEnergy_Timer = IN_MILLISECONDS;
         Grow_Timer = 0;
-        SunBeamDespawn_Timer = urand(10,11)*IN_MILISECONDS;
+        SunBeamDespawn_Timer = urand(10,11)*IN_MILLISECONDS;
         Grow = true;
-        HealthyGrow_Timer = urand(3,12)*IN_MILISECONDS;
+        HealthyGrow_Timer = urand(3,12)*IN_MILLISECONDS;
         NpcNatureBomb = false;
         NpcEonarsGift = false;
         NpcHealthySpore = false;
@@ -820,7 +820,7 @@ struct MANGOS_DLL_DECL mob_freya_groundAI : public ScriptedAI
             if(EonarsGift_Timer < diff)
             {
                 m_creature->CastSpell(GetFreya(m_creature, m_pInstance), m_bIsRegularMode ? SPELL_LIFEBINDER_GIFT : H_SPELL_LIFEBINDER_GIFT, true);
-                EonarsGift_Timer = IN_MILISECONDS;
+                EonarsGift_Timer = IN_MILLISECONDS;
             }else EonarsGift_Timer -= diff;
 
             if(NonSelectable_Timer < diff && m_creature->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE))
@@ -846,7 +846,7 @@ struct MANGOS_DLL_DECL mob_freya_groundAI : public ScriptedAI
                 if(size < 1)
                     size = 0.1f;
                 m_creature->SetFloatValue(OBJECT_FIELD_SCALE_X, size);
-                HealthyGrow_Timer = urand(3,5)*IN_MILISECONDS;
+                HealthyGrow_Timer = urand(3,5)*IN_MILLISECONDS;
             }else HealthyGrow_Timer -= diff;
 
         }
@@ -855,7 +855,7 @@ struct MANGOS_DLL_DECL mob_freya_groundAI : public ScriptedAI
             if(UnstableEnergy_Timer < diff)
             {
                 m_creature->CastSpell(m_creature, m_bIsRegularMode ? SPELL_UNSTABLE_ENERGY : H_SPELL_UNSTABLE_ENERGY, true);
-                UnstableEnergy_Timer = IN_MILISECONDS;
+                UnstableEnergy_Timer = IN_MILLISECONDS;
             }else UnstableEnergy_Timer -= diff;
         
         }
@@ -888,9 +888,9 @@ struct MANGOS_DLL_DECL boss_elder_brightleafAI : public ScriptedAI
 
     void Reset()
     {
-        BrightleafsFlux_Timer = 2*IN_MILISECONDS;
-        UnstableSunBeam_Timer = 3*IN_MILISECONDS;
-        SolarFlare_Timer = urand(50,60)*IN_MILISECONDS;
+        BrightleafsFlux_Timer = 2*IN_MILLISECONDS;
+        UnstableSunBeam_Timer = 3*IN_MILLISECONDS;
+        SolarFlare_Timer = urand(50,60)*IN_MILLISECONDS;
     }
 
     void Aggro(Unit* pWho)
@@ -916,19 +916,19 @@ struct MANGOS_DLL_DECL boss_elder_brightleafAI : public ScriptedAI
         if (BrightleafsFlux_Timer < diff)
         {
             DoCast(m_creature, SPELL_BRIGHTLEAFS_FLUX);
-            BrightleafsFlux_Timer = 5*IN_MILISECONDS;
+            BrightleafsFlux_Timer = 5*IN_MILLISECONDS;
         }else BrightleafsFlux_Timer -= diff;
 
         if (UnstableSunBeam_Timer < diff)
         {
             DoCast(m_creature, SPELL_UNSTABLE_SUN_BEAM);
-            UnstableSunBeam_Timer = 5*IN_MILISECONDS;
+            UnstableSunBeam_Timer = 5*IN_MILLISECONDS;
         }else UnstableSunBeam_Timer -= diff;
 
         if (SolarFlare_Timer < diff)
         {
             DoCast(SelectUnit(SELECT_TARGET_RANDOM,0), m_bIsRegularMode ? SPELL_SOLAR_FLARE : H_SPELL_SOLAR_FLARE);
-            SolarFlare_Timer = urand(40,50)*IN_MILISECONDS;
+            SolarFlare_Timer = urand(40,50)*IN_MILLISECONDS;
         }else SolarFlare_Timer -= diff;
 
          DoMeleeAttackIfReady();
@@ -956,9 +956,9 @@ struct MANGOS_DLL_DECL boss_elder_ironbranchAI : public ScriptedAI
     
     void Reset()
     {
-        IronRoots_Timer = urand(8,10)*IN_MILISECONDS;
-        ThronSwarm_Timer = urand(4,6)*IN_MILISECONDS;
-        Impale_Timer = urand(40,50)*IN_MILISECONDS;;
+        IronRoots_Timer = urand(8,10)*IN_MILLISECONDS;
+        ThronSwarm_Timer = urand(4,6)*IN_MILLISECONDS;
+        Impale_Timer = urand(40,50)*IN_MILLISECONDS;;
     }
 
     void Aggro(Unit* pWho)
@@ -1000,20 +1000,20 @@ struct MANGOS_DLL_DECL boss_elder_ironbranchAI : public ScriptedAI
                     i++;
                 }else break;
             }
-            IronRoots_Timer = urand(23, 28)*IN_MILISECONDS;
+            IronRoots_Timer = urand(23, 28)*IN_MILLISECONDS;
         }else IronRoots_Timer -= diff;
 
         if (ThronSwarm_Timer < diff)
         {
             if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM,1))
                 DoCast(target, m_bIsRegularMode ? SPELL_THORN_SWARM : H_SPELL_THORN_SWARM);
-            ThronSwarm_Timer = urand(9,11)*IN_MILISECONDS;
+            ThronSwarm_Timer = urand(9,11)*IN_MILLISECONDS;
         }else ThronSwarm_Timer -= diff;
 
         if (Impale_Timer < diff)
         {
             DoCast(m_creature->getVictim(), m_bIsRegularMode ? SPELL_IMPALE : H_SPELL_IMPALE);
-            Impale_Timer = urand(50,60)*IN_MILISECONDS;
+            Impale_Timer = urand(50,60)*IN_MILLISECONDS;
         }else Impale_Timer -= diff;
 
          DoMeleeAttackIfReady();
@@ -1039,9 +1039,9 @@ struct MANGOS_DLL_DECL boss_elder_stonebarkAI : public ScriptedAI
     uint32 PetrifiedBark_Timer;
     void Reset()
     {
-        GroundTremor_Timer = urand(7,10)*IN_MILISECONDS;
-        FistOfStone_Timer = urand(13,16)*IN_MILISECONDS;
-        PetrifiedBark_Timer = urand(30,40)*IN_MILISECONDS;
+        GroundTremor_Timer = urand(7,10)*IN_MILLISECONDS;
+        FistOfStone_Timer = urand(13,16)*IN_MILLISECONDS;
+        PetrifiedBark_Timer = urand(30,40)*IN_MILLISECONDS;
     }
     void Aggro(Unit* pWho)
     {
@@ -1066,19 +1066,19 @@ struct MANGOS_DLL_DECL boss_elder_stonebarkAI : public ScriptedAI
         if(GroundTremor_Timer < diff)
         {
             DoCast(m_creature, m_bIsRegularMode ? SPELL_GROUND_TREMOR : H_SPELL_GROUND_TREMOR);
-            GroundTremor_Timer = urand(18,22)*IN_MILISECONDS;
+            GroundTremor_Timer = urand(18,22)*IN_MILLISECONDS;
         }else GroundTremor_Timer -= diff;
 
         if(FistOfStone_Timer < diff)
         {
             DoCast(m_creature, SPELL_FIST_OF_STONE);
-            FistOfStone_Timer = urand(45,55)*IN_MILISECONDS;
+            FistOfStone_Timer = urand(45,55)*IN_MILLISECONDS;
         }else FistOfStone_Timer -= diff;
 
         if(PetrifiedBark_Timer < diff)
         {
             DoCast(m_creature, m_bIsRegularMode ? SPELL_PETRIFIED_BARK : H_SPELL_PETRIFIED_BARK);
-            PetrifiedBark_Timer = urand(30,40)*IN_MILISECONDS;
+            PetrifiedBark_Timer = urand(30,40)*IN_MILLISECONDS;
         }else PetrifiedBark_Timer -= diff;
 
         DoMeleeAttackIfReady();
@@ -1125,13 +1125,13 @@ struct MANGOS_DLL_DECL mob_freya_spawnedAI : public ScriptedAI
         Snaplasher = false;
         AncientConservator = false;
         DetonatingLasher = false;
-        DeathCountdown = 10*IN_MILISECONDS;
-        TidalWave_Timer = urand(2,4)*IN_MILISECONDS;
-        Stormbolt_Timer = IN_MILISECONDS;
-        LightningLash_Timer = urand(11,14)*IN_MILISECONDS;        
-        FlameLash_Timer = urand(5,10)*IN_MILISECONDS;
-        NaturesFury_Timer = urand(8,10)*IN_MILISECONDS;
-        RespawnSpores_Timer = 5*IN_MILISECONDS;
+        DeathCountdown = 10*IN_MILLISECONDS;
+        TidalWave_Timer = urand(2,4)*IN_MILLISECONDS;
+        Stormbolt_Timer = IN_MILLISECONDS;
+        LightningLash_Timer = urand(11,14)*IN_MILLISECONDS;        
+        FlameLash_Timer = urand(5,10)*IN_MILLISECONDS;
+        NaturesFury_Timer = urand(8,10)*IN_MILLISECONDS;
+        RespawnSpores_Timer = 5*IN_MILLISECONDS;
         Freya = GetFreya(m_creature, m_pInstance);
 
         if(!Freya)
@@ -1212,7 +1212,7 @@ struct MANGOS_DLL_DECL mob_freya_spawnedAI : public ScriptedAI
         if(DetonatingLasher && FlameLash_Timer < diff)
         {
             DoCast(m_creature->getVictim(), SPELL_FLAME_LASH);
-            FlameLash_Timer = urand(5,10)*IN_MILISECONDS;
+            FlameLash_Timer = urand(5,10)*IN_MILLISECONDS;
         }else FlameLash_Timer -= diff;
 
         if(AncientConservator)
@@ -1220,20 +1220,20 @@ struct MANGOS_DLL_DECL mob_freya_spawnedAI : public ScriptedAI
             if(NaturesFury_Timer < diff)
             {
                 DoCast(SelectUnit(SELECT_TARGET_RANDOM,0), m_bIsRegularMode ? SPELL_NATURES_FURY : H_SPELL_NATURES_FURY);
-                NaturesFury_Timer = urand(5,6)*IN_MILISECONDS;
+                NaturesFury_Timer = urand(5,6)*IN_MILLISECONDS;
             }else NaturesFury_Timer -= diff;
 
             if(RespawnSpores_Timer < diff)
             {
                 DoSpores(3);
-                RespawnSpores_Timer = 5*IN_MILISECONDS;
+                RespawnSpores_Timer = 5*IN_MILLISECONDS;
             }else RespawnSpores_Timer -= diff;
         }
 
         if(AncientWaterSpirit && TidalWave_Timer < diff)
         {
             DoCast(m_creature->getVictim(), m_bIsRegularMode ? SPELL_TIDAL_WAVE : H_SPELL_TIDAL_WAVE);
-            TidalWave_Timer = urand(7,9)*IN_MILISECONDS;
+            TidalWave_Timer = urand(7,9)*IN_MILLISECONDS;
         }else TidalWave_Timer -= diff;
 
         if(StormLasher)
@@ -1241,14 +1241,14 @@ struct MANGOS_DLL_DECL mob_freya_spawnedAI : public ScriptedAI
             if (LightningLash_Timer < diff)
             {
                 DoCast(m_creature->getVictim(), m_bIsRegularMode ? SPELL_LIGHTNING_LASH : H_SPELL_LIGHTNING_LASH);
-                LightningLash_Timer = urand(11,14)*IN_MILISECONDS;
+                LightningLash_Timer = urand(11,14)*IN_MILLISECONDS;
             }else
             {
                 LightningLash_Timer -= diff;
                 if (Stormbolt_Timer <diff)
                 {
                     DoCast(m_creature->getVictim(), m_bIsRegularMode ? SPELL_STORMBOLT : H_SPELL_STORMBOLT);
-                    Stormbolt_Timer = 2*IN_MILISECONDS;
+                    Stormbolt_Timer = 2*IN_MILLISECONDS;
                 }else Stormbolt_Timer -= diff;
             }
         }
