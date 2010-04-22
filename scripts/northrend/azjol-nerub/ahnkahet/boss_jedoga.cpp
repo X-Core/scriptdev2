@@ -439,7 +439,7 @@ struct MANGOS_DLL_DECL boss_jedogaAI : public ScriptedAI
                 m_creature->RemoveAurasDueToSpell(SPELL_SPHERE_VISUAL);
                   m_creature->SetInCombatWithZone();
                 //Spawn Volunteers
-                for(int i = 0; i <= 28; i++)
+                for(int i = 0; i <= 28; ++i)
                 {
                     if(Creature *pTemp = m_creature->SummonCreature(NPC_TWILIGHT_VOLUNTEER, VolunteerLoc[i].x, VolunteerLoc[i].y, VolunteerLoc[i].z, VolunteerLoc[i].o, TEMPSUMMON_CORPSE_DESPAWN, 0))
                         pTemp->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);

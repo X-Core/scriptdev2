@@ -102,7 +102,7 @@ struct MANGOS_DLL_DECL boss_amanitarAI : public ScriptedAI
     {
         std::list<Creature*> lMushroomsHealthy;
         GetCreatureListWithEntryInGrid(lMushroomsHealthy, m_creature, NPC_HEALTHY_MUSHROOM, 150.0f);
-        for(std::list<Creature*>::iterator itr1 = lMushroomsHealthy.begin(); itr1 != lMushroomsHealthy.end(); itr1++)
+        for(std::list<Creature*>::iterator itr1 = lMushroomsHealthy.begin(); itr1 != lMushroomsHealthy.end(); ++itr1)
         {
             if(show)
                 (*itr1)->SetVisibility(VISIBILITY_ON);
@@ -111,7 +111,7 @@ struct MANGOS_DLL_DECL boss_amanitarAI : public ScriptedAI
         }
         std::list<Creature*> lMushroomsPoison;
         GetCreatureListWithEntryInGrid(lMushroomsPoison, m_creature, NPC_POISONOUS_MUSHROOM, 150.0f);
-        for(std::list<Creature*>::iterator itr2 = lMushroomsPoison.begin(); itr2 != lMushroomsPoison.end(); itr2++)
+        for(std::list<Creature*>::iterator itr2 = lMushroomsPoison.begin(); itr2 != lMushroomsPoison.end(); ++itr2)
         {
             if(show)
                 (*itr2)->SetVisibility(VISIBILITY_ON);

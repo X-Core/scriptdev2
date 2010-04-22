@@ -450,7 +450,7 @@ struct MANGOS_DLL_DECL boss_freyaAI : public ScriptedAI
 
     void SetRandomOrder()
     {
-        for(int8 i = 0; i < WAVE_COUNT;i++)
+        for(int8 i = 0; i < WAVE_COUNT;++i)
         {
             SpellOrder[i] = 0;
             YellOrder[i] = 0;
@@ -463,7 +463,7 @@ struct MANGOS_DLL_DECL boss_freyaAI : public ScriptedAI
             {
                 SpellOrder[pos] = InitialOrder[i].entry;
                 YellOrder[pos] = InitialOrder[i].yell;
-                i++;
+                ++i;
             }
         }
     }
@@ -480,7 +480,7 @@ struct MANGOS_DLL_DECL boss_freyaAI : public ScriptedAI
         DespawnAllCreaturesWithEntry(NPC_WAVE_10);
         DespawnAllCreaturesWithEntry(NPC_EONARS_GIFT);
 
-        for(uint32 i = NPC_ELDER_IRONBRANCH; i <= NPC_ELDER_BRIGHTLEAF; i++)
+        for(uint32 i = NPC_ELDER_IRONBRANCH; i <= NPC_ELDER_BRIGHTLEAF; ++i)
             if(Creature* pTemp = GetClosestCreatureWithEntry(m_creature, i, 180.0f))
                 pTemp->RemoveAllAuras();
     }
@@ -607,7 +607,7 @@ struct MANGOS_DLL_DECL boss_freyaAI : public ScriptedAI
                 ThreeAddPhase = true;
             
             Wave_Timer = MINUTE*IN_MILLISECONDS;
-            Wave_Count++;
+            ++Wave_Count;
         }else Wave_Timer -= diff;
 
         if (LifebinderGift_Timer < diff)
@@ -648,7 +648,7 @@ struct MANGOS_DLL_DECL boss_freyaAI : public ScriptedAI
                         if(Creature* pRoots = m_creature->SummonCreature(NPC_STRENGTHENED_IRON_ROOTS, x, y, z, 0, TEMPSUMMON_DEAD_DESPAWN, 0))
                             ((mob_str_iron_rootsAI*)pRoots->AI())->SetVictim(target->GetGUID());
                         DoTeleportPlayer(target, x, y, z, target->GetOrientation());
-                        i++;
+                        ++i;
                     }else break;
                 }
                 IronRoots_Timer = urand(50,70)*IN_MILLISECONDS;
@@ -659,7 +659,7 @@ struct MANGOS_DLL_DECL boss_freyaAI : public ScriptedAI
         {
             if(SunBeams_Timer < diff)
             {
-                for(int8 i = 0; i < 3; i++)
+                for(int8 i = 0; i < 3; ++i)
                 {
                     if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM,0))
                     {
@@ -681,7 +681,7 @@ struct MANGOS_DLL_DECL boss_freyaAI : public ScriptedAI
                 m_creature->CastSpell(m_creature, SPELL_NATURE_BOMB_SUMMON, true);
                 
                 int8 count = urand(8,10);
-                for(int8 i = 0; i < count; i++)
+                for(int8 i = 0; i < count; ++i)
                 {
                     float radius = 30* rand_norm_f();
                     float angle = 2.0f * M_PI_F * rand_norm_f();
@@ -997,7 +997,7 @@ struct MANGOS_DLL_DECL boss_elder_ironbranchAI : public ScriptedAI
                     if(Creature* pRoots = m_creature->SummonCreature(NPC_IRON_ROOTS, x, y, z, 0, TEMPSUMMON_DEAD_DESPAWN, 0))
                         ((mob_iron_rootsAI*)pRoots->AI())->SetVictim(target->GetGUID());
                     DoTeleportPlayer(target, x, y, z, target->GetOrientation());
-                    i++;
+                    ++i;
                 }else break;
             }
             IronRoots_Timer = urand(23, 28)*IN_MILLISECONDS;
@@ -1196,9 +1196,9 @@ struct MANGOS_DLL_DECL mob_freya_spawnedAI : public ScriptedAI
 
     void DoSpores(int8 times)
     {
-        for(int8 i = 0; i < times; i++)
+        for(int8 i = 0; i < times; ++i)
         {
-            for(int8 itr = 0; i < 3; i++)
+            for(int8 itr = 0; i < 3; ++i)
                 m_creature->CastSpell(m_creature, SPELL_SPORE_SUMMON_NE+itr, true);
             m_creature->CastSpell(m_creature, SPELL_SPORE_SUMMON_NW, true);
         }

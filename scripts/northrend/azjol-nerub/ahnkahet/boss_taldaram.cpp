@@ -190,7 +190,7 @@ struct MANGOS_DLL_DECL boss_taldaramAI : public ScriptedAI
         // Summon Flame Orb
         if(m_uiSummonOrb_Timer <= uiDiff)
         {
-            for(int i = 0; i <= 3; i++)
+            for(int i = 0; i <= 3; ++i)
             {
                 m_creature->SummonCreature(NPC_FLAME_ORB, m_creature->GetPositionX(), m_creature->GetPositionY(), FLAME_ORB_Z, 0, TEMPSUMMON_CORPSE_DESPAWN, 0);
                 if(m_bIsRegularMode)

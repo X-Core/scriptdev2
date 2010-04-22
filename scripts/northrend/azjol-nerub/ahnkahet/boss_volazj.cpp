@@ -289,7 +289,7 @@ struct MANGOS_DLL_DECL boss_volazjAI : public ScriptedAI
     {
         m_creature->SummonCreature(NPC_ANCIENT_VOID, SpawnLoc[8].x, SpawnLoc[8].y, SpawnLoc[8].z, 0, TEMPSUMMON_CORPSE_DESPAWN, 0);             
 
-        for(int i = 0; i <= 7; i++)
+        for(int i = 0; i <= 7; ++i)
             m_creature->SummonCreature(NPC_TWISTED_VISAGE, SpawnLoc[i].x, SpawnLoc[i].y, SpawnLoc[i].z, 0, TEMPSUMMON_CORPSE_DESPAWN, 0);
         
     }

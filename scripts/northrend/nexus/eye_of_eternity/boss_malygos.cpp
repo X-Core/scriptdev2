@@ -635,14 +635,14 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
     {
         //Nexus lords
         int max_lords = m_bIsRegularMode ? NEXUS_LORD_COUNT : NEXUS_LORD_COUNT_H;
-        for(int i=0; i < max_lords;i++)
+        for(int i=0; i < max_lords;++i)
         {
             if(Creature *pLord = m_creature->SummonCreature(NPC_NEXUS_LORD, m_creature->getVictim()->GetPositionX()-5+rand()%10, m_creature->getVictim()->GetPositionY()-5+rand()%10, m_creature->getVictim()->GetPositionZ(), 0, TEMPSUMMON_CORPSE_DESPAWN, 0))
                 pLord->AI()->AttackStart(m_creature->getVictim());
         }
         //Scions of eternity
         int max_scions = m_bIsRegularMode ? SCION_OF_ETERNITY_COUNT : SCION_OF_ETERNITY_COUNT_H;
-        for(int i=0; i < max_scions;i++)
+        for(int i=0; i < max_scions;++i)
         {
             uint32 x = urand(SHELL_MIN_X, SHELL_MAX_X);
             uint32 y = urand(SHELL_MIN_Y, SHELL_MAX_Y);
@@ -845,7 +845,7 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
                         m_uiTimer = 1000;
                         return;
                     }
-                    m_uiVortexPhase++;
+                    ++m_uiVortexPhase;
                 }else m_uiTimer -= uiDiff;
                 return;
             }
@@ -1046,7 +1046,7 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
                 for(pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0); pTarget->GetEntry() != NPC_WYRMREST_SKYTALON; )
                 {
                     pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0);
-                    count++;
+                    ++count;
                     if(count >= 50)
                         break;
                 }
@@ -1134,7 +1134,7 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
                         m_creature->getVictim()->DealDamage(m_creature, m_creature->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
                         break;
                 }
-                m_uiSpeechCount++;
+                ++m_uiSpeechCount;
             }else m_uiSpeechTimer[m_uiSpeechCount] -= uiDiff;
             
         }
@@ -1292,7 +1292,7 @@ struct MANGOS_DLL_DECL mob_scion_of_eternityAI : public ScriptedAI
         m_creature->BuildHeartBeatMsg(&heart);
         m_creature->SendMessageToSet(&heart, false);
         //Just rand point in range, not very smooth
-        /*m_uiMovePoint++;
+        /*++m_uiMovePoint;
         uint32 x = urand(SHELL_MIN_X, SHELL_MAX_X);
         uint32 y = urand(SHELL_MIN_Y, SHELL_MAX_Y);
         m_creature->GetMotionMaster()->MovePoint(m_uiMovePoint, x, y, FLOOR_Z+10); */

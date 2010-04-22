@@ -26,6 +26,7 @@ EndScriptData
 #include "escort_ai.h"
 #include "ObjectMgr.h"
 #include "GameEventMgr.h"
+#include "Spell.h"
 
 /* ContentData
 npc_air_force_bots       80%    support for misc (invisible) guard bots in areas where player allowed to fly. Summon guards after a preset time if tagged by spell
@@ -2090,6 +2091,16 @@ struct MANGOS_DLL_DECL mob_mirror_imageAI : public ScriptedAI
         m_uiFrostboltTimer = urand(500, 1500);
         m_uiFireBlastTimer = urand(4500, 6000);
     }
+    void AttackStart(Unit *pWho)
+    {
+        if (m_creature->Attack(pWho, true))
+        {
+            m_creature->AddThreat(pWho);
+            m_creature->SetInCombatWith(pWho);
+            pWho->SetInCombatWith(m_creature);
+            m_creature->GetMotionMaster()->MoveChase(pWho, 35.0f);
+        }
+    }
 
     void UpdateAI(const uint32 uiDiff)
     {
@@ -2100,6 +2111,7 @@ struct MANGOS_DLL_DECL mob_mirror_imageAI : public ScriptedAI
             {
                 fDist = m_creature->GetDistance(pOwner);
                 fAngle = m_creature->GetAngle(pOwner);
+                pOwner->CastSpell(m_creature, 57507, true); // Not right spell, but it has both auras we need
             }
             bLocked = true;
         }
@@ -2134,13 +2146,13 @@ struct MANGOS_DLL_DECL mob_mirror_imageAI : public ScriptedAI
 
         if (m_uiFrostboltTimer <= uiDiff)
         {
-            m_creature->CastSpell(pTarget, SPELL_FROSTBOLT, false, NULL, NULL, pOwner->GetGUID());
+            m_creature->CastSpell(pTarget, SPELL_FROSTBOLT, false);
             m_uiFrostboltTimer = urand(3000, 4500);
         } else m_uiFrostboltTimer -= uiDiff;
 
         if (m_uiFireBlastTimer <= uiDiff)
         {
-            m_creature->CastSpell(pTarget, SPELL_FIREBLAST, false, NULL, NULL, pOwner->GetGUID());
+            m_creature->CastSpell(pTarget, SPELL_FIREBLAST, false);
             m_uiFireBlastTimer = urand(9000, 12000);
         } else m_uiFireBlastTimer -= uiDiff;
     }
