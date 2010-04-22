@@ -2088,7 +2088,7 @@ struct MANGOS_DLL_DECL mob_mirror_imageAI : public ScriptedAI
 
     void Reset()
     {
-        m_uiFrostboltTimer = urand(500, 1500);
+        m_uiFrostboltTimer = 1000;
         m_uiFireBlastTimer = urand(4500, 6000);
     }
     void AttackStart(Unit *pWho)
@@ -2143,16 +2143,22 @@ struct MANGOS_DLL_DECL mob_mirror_imageAI : public ScriptedAI
             }
             return;
         }
-
+        //It cant cast spell if target is polymorphed or controled
+        if(pTarget->isCharmed() || pTarget->isFeared() || pTarget->IsPolymorphed())
+        {
+            if(m_creature->IsNonMeleeSpellCasted(false))
+                m_creature->InterruptNonMeleeSpells(false);
+            return;
+        }
         if (m_uiFrostboltTimer <= uiDiff)
         {
-            m_creature->CastSpell(pTarget, SPELL_FROSTBOLT, false);
-            m_uiFrostboltTimer = urand(3000, 4500);
+            m_creature->CastSpell(pTarget, SPELL_FROSTBOLT, false, NULL, NULL, pOwner->GetGUID());
+            m_uiFrostboltTimer = 3500;
         } else m_uiFrostboltTimer -= uiDiff;
 
         if (m_uiFireBlastTimer <= uiDiff)
         {
-            m_creature->CastSpell(pTarget, SPELL_FIREBLAST, false);
+            m_creature->CastSpell(pTarget, SPELL_FIREBLAST, false, NULL, NULL, pOwner->GetGUID());
             m_uiFireBlastTimer = urand(9000, 12000);
         } else m_uiFireBlastTimer -= uiDiff;
     }
