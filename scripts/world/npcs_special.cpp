@@ -45,7 +45,8 @@ npc_tabard_vendor        50%    allow recovering quest related tabards, achievem
 npc_locksmith            75%    list of keys needs to be confirmed
 npc_onyxian_whelpling   100%    non-combat pet emote
 npc_wormhole            100%    ENG wormhole item 48933
-npc_time_lost_drake_controller  controller for NPC 32491 (Time-lost Proto-drake) to make its spawns random.  
+npc_time_lost_drake_controller  controller for NPC 32491 (Time-lost Proto-drake) to make its spawns random.
+mob_mirror_image         60%    AI for mage spell Mirror Image
 EndContentData */
 
 /*########
@@ -2060,6 +2061,96 @@ CreatureAI* GetAI_npc_rune_blade(Creature* pCreature)
     return new npc_rune_blade(pCreature);
 }
 
+/*########
+# mob_mirror_image AI
+#########*/
+
+enum MirrorImage
+{
+    SPELL_FROSTBOLT = 59638,
+    SPELL_FIREBLAST = 59637
+};
+
+struct MANGOS_DLL_DECL mob_mirror_imageAI : public ScriptedAI
+{
+    mob_mirror_imageAI(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        bLocked = false;
+        Reset();
+    }
+    uint64 m_uiCreatorGUID;
+    uint32 m_uiFrostboltTimer;
+    uint32 m_uiFireBlastTimer;
+    float fDist;
+    float fAngle;
+    bool bLocked;
+
+    void Reset()
+    {
+        m_uiFrostboltTimer = urand(500, 1500);
+        m_uiFireBlastTimer = urand(4500, 6000);
+    }
+
+    void UpdateAI(const uint32 uiDiff)
+    {
+        if (!bLocked)
+        {
+            m_uiCreatorGUID = m_creature->GetCreatorGUID();
+            if (Player* pOwner = (Player*)Unit::GetUnit(*m_creature, m_uiCreatorGUID))
+            {
+                fDist = m_creature->GetDistance(pOwner);
+                fAngle = m_creature->GetAngle(pOwner);
+            }
+            bLocked = true;
+        }
+
+        Player* pOwner = (Player*)Unit::GetUnit(*m_creature, m_uiCreatorGUID);
+        if (!pOwner || !pOwner->IsInWorld())
+        {
+            m_creature->ForcedDespawn();
+            return;
+        }
+        
+        uint64 targetGUID = 0;
+
+        if (Spell* pSpell = pOwner->GetCurrentSpell(CURRENT_GENERIC_SPELL))
+            targetGUID = pSpell->m_targets.getUnitTargetGUID();
+        else if (pOwner->getVictim())
+            targetGUID = pOwner->getVictim()->GetGUID();
+
+        Unit* pTarget = Unit::GetUnit(*m_creature, targetGUID);
+
+        if (!pTarget || !m_creature->CanInitiateAttack() || !pTarget->isTargetableForAttack() ||
+        !m_creature->IsHostileTo(pTarget) || !pTarget->isInAccessablePlaceFor(m_creature))
+        {
+            if (m_creature->GetMotionMaster()->GetCurrentMovementGeneratorType() != FOLLOW_MOTION_TYPE)
+            {
+                m_creature->InterruptNonMeleeSpells(false);
+                m_creature->GetMotionMaster()->Clear();
+                m_creature->GetMotionMaster()->MoveFollow(pOwner, fDist, fAngle);
+            }
+            return;
+        }
+
+        if (m_uiFrostboltTimer <= uiDiff)
+        {
+            m_creature->CastSpell(pTarget, SPELL_FROSTBOLT, false, NULL, NULL, pOwner->GetGUID());
+            m_uiFrostboltTimer = urand(3000, 4500);
+        } else m_uiFrostboltTimer -= uiDiff;
+
+        if (m_uiFireBlastTimer <= uiDiff)
+        {
+            m_creature->CastSpell(pTarget, SPELL_FIREBLAST, false, NULL, NULL, pOwner->GetGUID());
+            m_uiFireBlastTimer = urand(9000, 12000);
+        } else m_uiFireBlastTimer -= uiDiff;
+    }
+};
+
+CreatureAI* GetAI_mob_mirror_image(Creature* pCreature)
+{
+    return new mob_mirror_imageAI(pCreature);
+}
+
 void AddSC_npcs_special()
 {
     Script* newscript;
@@ -2172,6 +2263,11 @@ void AddSC_npcs_special()
     newscript = new Script;
     newscript->Name = "npc_runeblade";
     newscript->GetAI = &GetAI_npc_rune_blade;
+    newscript->RegisterSelf();
+
+    newscript = new Script;
+    newscript->Name = "mob_mirror_image";
+    newscript->GetAI = &GetAI_mob_mirror_image;
     newscript->RegisterSelf();
 }
 /*
