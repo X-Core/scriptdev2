@@ -26,8 +26,6 @@ EndScriptData */
 #include "precompiled.h"
 #include "def_culling_of_stratholme.h"
 #include "escort_ai.h"
-#include "weather.h"
- 
  
 enum
 {
@@ -751,7 +749,7 @@ struct MANGOS_DLL_DECL npc_arthasAI : public npc_escortAI
             {
                                 case 1:
                                         PhaseC = true;
-                    SetWeather(WEATHER_STATE_MEDIUM_RAIN, 0.9999f);
+  
                                         Arthas = m_creature;                   
                     Arthas->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
                     Uther = Arthas->SummonCreature(26528, 1794.357f,1272.183f,141.558f,1.37f,TEMPSUMMON_TIMED_DESPAWN,180000);
