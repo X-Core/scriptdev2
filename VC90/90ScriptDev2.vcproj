@@ -403,6 +403,14 @@
 			<Filter
 				Name="custom"
 				>
+				<File
+					RelativePath="..\scripts\custom\npc_arena_honor.cpp"
+					>
+				</File>
+ 				<File
+					RelativePath="..\scripts\custom\teleguy.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="eastern_kingdoms"
@@ -1666,23 +1674,27 @@
 							>
 						</File>
 						<File
-							RelativePath="..\scripts\northrend\crusaders_coliseum\trial_of_the_crusader\boss_faction_champions.cpp"
+							RelativePath="..\scripts\northrend\crusaders_coliseum\trial_of_the_champion\boss_argent_challenge.cpp"
 							>
 						</File>
 						<File
-							RelativePath="..\scripts\northrend\crusaders_coliseum\trial_of_the_crusader\boss_jaraxxus.cpp"
+							RelativePath="..\scripts\northrend\crusaders_coliseum\trial_of_the_champion\boss_black_knight.cpp"
 							>
 						</File>
 						<File
-							RelativePath="..\scripts\northrend\crusaders_coliseum\trial_of_the_crusader\boss_northrend_beasts.cpp"
+							RelativePath="..\scripts\northrend\crusaders_coliseum\trial_of_the_champion\boss_grand_champions.cpp"
 							>
 						</File>
 						<File
-							RelativePath="..\scripts\northrend\crusaders_coliseum\trial_of_the_crusader\boss_twin_valkyr.cpp"
+							RelativePath="..\scripts\northrend\crusaders_coliseum\trial_of_the_champion\instance_trial_of_the_champion.cpp"
 							>
 						</File>
 						<File
-							RelativePath="..\scripts\northrend\crusaders_coliseum\trial_of_the_crusader\instance_trial_of_the_crusader.cpp"
+							RelativePath="..\scripts\northrend\crusaders_coliseum\trial_of_the_champion\trial_of_the_champion.h"
+							>
+						</File>
+						<File
+							RelativePath="..\scripts\northrend\crusaders_coliseum\trial_of_the_champion\trial_of_the_champion.cpp"
 							>
 						</File>
 						<File
@@ -1693,6 +1705,10 @@
 							RelativePath="..\scripts\northrend\crusaders_coliseum\trial_of_the_crusader\trial_of_the_crusader.h"
 							>
 						</File>
+					</Filter>
+					<Filter
+						Name="trial_of_the_crusader"
+						>
 					</Filter>
 				</Filter>
 				<Filter
@@ -1906,6 +1922,10 @@
 							>
 						</File>
 						<File
+							RelativePath="..\scripts\northrend\ulduar\halls_of_stone\boss_krystallus.cpp"
+							>
+						</File>
+						<File
 							RelativePath="..\scripts\northrend\ulduar\halls_of_stone\boss_sjonnir.cpp"
 							>
 						</File>
@@ -1925,6 +1945,66 @@
 					<Filter
 						Name="ulduar"
 						>
+						<File
+							RelativePath="..\scripts\northrend\ulduar\ulduar\boss_algalon.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\scripts\northrend\ulduar\ulduar\boss_auriaya.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\scripts\northrend\ulduar\ulduar\boss_freya.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\scripts\northrend\ulduar\ulduar\boss_hodir.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\scripts\northrend\ulduar\ulduar\boss_ignis.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\scripts\northrend\ulduar\ulduar\boss_iron_council.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\scripts\northrend\ulduar\ulduar\boss_kologarn.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\scripts\northrend\ulduar\ulduar\boss_leviathan.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\scripts\northrend\ulduar\ulduar\boss_mimiron.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\scripts\northrend\ulduar\ulduar\boss_razorscale.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\scripts\northrend\ulduar\ulduar\boss_thorim.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\scripts\northrend\ulduar\ulduar\boss_vezax.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\scripts\northrend\ulduar\ulduar\boss_xt_002.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\scripts\northrend\ulduar\ulduar\boss_yogg_saron.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\scripts\northrend\ulduar\ulduar\ulduar_teleport.cpp"
+							>
+						</File>
 						<File
 							RelativePath="..\scripts\northrend\ulduar\ulduar\instance_ulduar.cpp"
 							>
@@ -1998,6 +2078,26 @@
 				<Filter
 					Name="vault_of_archavon"
 					>
+					<File
+						RelativePath="..\scripts\northrend\vault_of_archavon\boss_archavon.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\scripts\northrend\vault_of_archavon\boss_emalon.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\scripts\northrend\vault_of_archavon\boss_koralon.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\scripts\northrend\vault_of_archavon\instance_vault_of_archavon.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\scripts\northrend\vault_of_archavon\vault_of_archavon.h"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="violet_hold"
@@ -2694,6 +2794,14 @@
 			</File>
 			<File
 				RelativePath="..\include\sc_instance.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\sc_boss_spell_worker.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\include\sc_boss_spell_worker.h"
 				>
 			</File>
 		</Filter>
