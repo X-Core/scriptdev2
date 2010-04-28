@@ -22,10 +22,7 @@ SDCategory: Ulduar
 EndScriptData */
 
 #include "precompiled.h"
-#include "def_ulduar.h"
-#define DATA_LEFT_ARM NPC_KOLOGARN_LEFT_ARM
-#define DATA_RIGHT_ARM NPC_KOLOGARN_RIGHT_ARM
-#define DATA_KOLOGARN NPC_KOLOGARN
+#include "ulduar.h"
 
 enum
 {
@@ -120,15 +117,15 @@ CreatureAI* GetAI_mob_ulduar_rubble(Creature* pCreature)
 }
 
 // Left Arm
-struct MANGOS_DLL_DECL boss_kologarn_left_armAI : public ScriptedAI
+struct MANGOS_DLL_DECL boss_left_armAI : public ScriptedAI
 {
-    boss_kologarn_left_armAI(Creature* pCreature) : ScriptedAI(pCreature)
+    boss_left_armAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         Reset();
         SetCombatMovement(false);
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
-        LeftArmX = 1777.636841; LeftArmY = -47.970596; LeftArmZ = 448.805908;
+        LeftArmX = 1777.636841f; LeftArmY = -47.970596f; LeftArmZ = 448.805908f;
     }
 
     bool m_bIsRegularMode;
@@ -142,6 +139,7 @@ struct MANGOS_DLL_DECL boss_kologarn_left_armAI : public ScriptedAI
         Shockwave_Timer = 30000;
         Addcount = 0;
         DoCast(m_creature, SPELL_ARM_VISUAL);
+		SetCombatMovement(false);
     }
 
     void Aggro(Unit* pWho)
@@ -188,21 +186,21 @@ struct MANGOS_DLL_DECL boss_kologarn_left_armAI : public ScriptedAI
     }
 };
 
-CreatureAI* GetAI_boss_kologarn_left_arm(Creature* pCreature)
+CreatureAI* GetAI_boss_left_arm(Creature* pCreature)
 {
-    return new boss_kologarn_left_armAI(pCreature);
+    return new boss_left_armAI(pCreature);
 }
 
 // Right Arm
-struct MANGOS_DLL_DECL boss_kologarn_right_armAI : public ScriptedAI
+struct MANGOS_DLL_DECL boss_right_armAI : public ScriptedAI
 {
-    boss_kologarn_right_armAI(Creature* pCreature) : ScriptedAI(pCreature)
+    boss_right_armAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         Reset();
         SetCombatMovement(false);
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
-        RightArmX = 1779.671753; RightArmY = 1.514701; RightArmZ = 448.810577;
+        RightArmX = 1779.671753f; RightArmY = 1.514701f; RightArmZ = 448.810577f;
     }
 
     bool m_bIsRegularMode;
@@ -225,6 +223,7 @@ struct MANGOS_DLL_DECL boss_kologarn_right_armAI : public ScriptedAI
         freedmg = 0;
         grip = false;
         DoCast(m_creature, SPELL_ARM_VISUAL);
+		SetCombatMovement(false);
     }
 
     void Aggro(Unit* pWho)
@@ -297,9 +296,9 @@ struct MANGOS_DLL_DECL boss_kologarn_right_armAI : public ScriptedAI
     }
 };
 
-CreatureAI* GetAI_boss_kologarn_right_arm(Creature* pCreature)
+CreatureAI* GetAI_boss_right_arm(Creature* pCreature)
 {
-    return new boss_kologarn_right_armAI(pCreature);
+    return new boss_right_armAI(pCreature);
 }
 
 // Kologarn
@@ -331,6 +330,7 @@ struct MANGOS_DLL_DECL boss_kologarnAI : public ScriptedAI
         Check_Timer = 6300;
         right = true;
         left = true;
+		SetCombatMovement(false);
     }
 
     void JustDied(Unit* pKiller)
@@ -428,7 +428,7 @@ struct MANGOS_DLL_DECL boss_kologarnAI : public ScriptedAI
                 DoCast(m_creature->getVictim(), m_bIsRegularMode ? SPELL_PETRIFYING_BREATH : SPELL_PETRIFYING_BREATH_H);
             Check_Timer = 500;
         }else Check_Timer -= diff;
-
+        
         DoMeleeAttackIfReady();
     }
 };
@@ -453,12 +453,12 @@ void AddSC_boss_kologarn()
     NewScript->RegisterSelf();
 
     NewScript = new Script;
-    NewScript->Name = "boss_kologarn_left_arm";
-    NewScript->GetAI = &GetAI_boss_kologarn_left_arm;
+    NewScript->Name = "boss_left_arm";
+    NewScript->GetAI = &GetAI_boss_left_arm;
     NewScript->RegisterSelf();
 
     NewScript = new Script;
-    NewScript->Name = "boss_kologarn_right_arm";
-    NewScript->GetAI = &GetAI_boss_kologarn_right_arm;
+    NewScript->Name = "boss_right_arm";
+    NewScript->GetAI = &GetAI_boss_right_arm;
     NewScript->RegisterSelf();
 }

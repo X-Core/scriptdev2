@@ -332,7 +332,7 @@ extern void AddSC_boss_krystallus();
 extern void AddSC_halls_of_stone();
 extern void AddSC_instance_halls_of_stone();
 
-extern void AddSC_boss_leviathan();                         //ulduar
+extern void AddSC_boss_flameleviatan();                         //ulduar
 extern void AddSC_boss_ignis();
 extern void AddSC_boss_razorscale();
 extern void AddSC_boss_xt002();
@@ -344,9 +344,8 @@ extern void AddSC_boss_mimiron();
 extern void AddSC_boss_hodir();
 extern void AddSC_boss_freya();
 extern void AddSC_boss_vezax();
-extern void AddSC_boss_yogg_saron();
+extern void AddSC_boss_yoggsaron();
 extern void AddSC_boss_algalon();
-extern void AddSC_ulduar_teleport();
 extern void AddSC_instance_ulduar();
 
 extern void AddSC_boss_ingvar();                            //utgarde_keep
@@ -399,7 +398,6 @@ extern void AddSC_boss_forgemaster_gafrost();
 extern void AddSC_boss_krick();
 extern void AddSC_boss_scourgelord_tirannus();
 
-extern void AddSC_instance_halls_of_reflection();
 extern void AddSC_boss_falryn();
 extern void AddSC_boss_marwyn();
 //extern void AddSC_boss_lich_king_fh();
@@ -805,7 +803,7 @@ void AddScripts()
     AddSC_halls_of_stone();
     AddSC_instance_halls_of_stone();
 
-    AddSC_boss_leviathan();                                 //ulduar
+    AddSC_boss_flameleviatan();                                 //ulduar
     AddSC_boss_ignis();
     AddSC_boss_razorscale();
     AddSC_boss_xt002();
@@ -817,9 +815,8 @@ void AddScripts()
     AddSC_boss_hodir();
     AddSC_boss_freya();
     AddSC_boss_vezax();
-    AddSC_boss_yogg_saron();
+    AddSC_boss_yoggsaron();
     AddSC_boss_algalon();
-    AddSC_ulduar_teleport();
     AddSC_instance_ulduar();
 
     AddSC_boss_ingvar();                                    //utgarde_keep
@@ -872,7 +869,6 @@ void AddScripts()
     AddSC_boss_krick();
     AddSC_boss_scourgelord_tirannus();
 
-    AddSC_instance_halls_of_reflection();
     AddSC_boss_falryn();
     AddSC_boss_marwyn();
 //    AddSC_boss_lich_king_fh();
